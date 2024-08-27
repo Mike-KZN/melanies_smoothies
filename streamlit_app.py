@@ -39,3 +39,8 @@ else:
         st.warning('Please enter a name for your smoothie.')
     if not ingredients_list:
         st.warning('Please select at least one ingredient.')
+        
+# New section to display FruityVice Nutrician Information
+import requests
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+st.text(fruityvice_response)
