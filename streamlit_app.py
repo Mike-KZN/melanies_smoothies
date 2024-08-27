@@ -43,11 +43,12 @@ else:
 # New section to display Fruityvice nutrition information
 import requests
 
-# Fetch data from the Fruityvice API
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+if ingredients_list:
+    ingredients_string = ''
 
-# Optional: Display the raw JSON response (currently commented out)
-# st.text(fruityvice_response.json())
+    for fruit_chosen in ingredients_list:
+        ingredients_string += fruit_chosen + ' '
+    
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+    fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
 
-# Display the DataFrame using Streamlit
-st.dataframe(data=fruityvice_response.json(), use_container_width=True)
