@@ -35,8 +35,8 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 # Convert the Snowpark DataFrame to a Pandas DataFrame so we can use the LOC function
 pd_df = my_dataframe.to_pandas()
 
-st.dataframe(pd_df)  # Optional: display the DataFrame for debugging
-st.stop()  # Optional: stop execution for debugging
+#st.dataframe(pd_df)  # Optional: display the DataFrame for debugging
+#st.stop()  # Optional: stop execution for debugging
 
 # Use a multiselect widget in Streamlit to allow users to select up to 5 ingredients
 ingredients_list = st.multiselect(
