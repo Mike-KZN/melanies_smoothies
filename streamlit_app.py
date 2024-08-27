@@ -5,16 +5,6 @@ import snowflake.connector
 from snowflake.snowpark.session import Session
 from snowflake.snowpark.functions import col
 
-# Snowflake connection parameters
-conn_params = {
-    "account": "UOHBUOI-ZN81948",
-    "user": "mikebd",
-    "password": "P@ssw0rd6969",
-    "warehouse": "COMPUTE_WH",
-    "database": "SMOOTHIES",
-    "schema": "PUBLIC",
-    "role": "SYSADMIN"
-}
 # Write directly to the app
 st.title(":cup_with_straw: Customize Your Smoothie App :cup_with_straw:")
 
