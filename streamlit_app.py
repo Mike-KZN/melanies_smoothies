@@ -46,18 +46,31 @@ ingredients_list = st.multiselect(
 )
 
 # Check if any ingredients were selected
+# Assuming `pd_df` is a Pandas DataFrame with fruit data
+
 if ingredients_list:
-    ingredients_string = ''
-
-    # Loop through the selected ingredients
     for fruit_chosen in ingredients_list:
-        ingredients_string += fruit_chosen + ' '
+        # Find the corresponding 'SEARCH_ON' value
+        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
 
-        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
-        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+        # Check if the search_on value is different from fruit_chosen to avoid redundancy
+        if search_on and search_on.lower() != fruit_chosen.lower():
+            sentence = f"The search value for {fruit_chosen} is {search_on}."
+        else:
+            sentence = f"The search value for {fruit_chosen} is '{search_on or 'Not found'}'."
 
-        st.subheader(fruit_chosen + ' Nutrition Information')
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_chosen)
+        # Display the sentence
+        st.write(sentence)
 
-        # Display the data fetched from the API in a Streamlit dataframe
-        fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+        # Display the subheader and fetch the API data as before
+        st.subheader(f"{fruit_chosen} Nutrition Information")
+
+        try:
+            fruityvice_response = requests.get(f"https://fruityvice.com/api/fruit/{search_on or fruit_chosen}")
+            fruityvice_response.raise_for_status()
+
+            # Display the data fetched from the API
+            st.dataframe(fruityvice_response.json(), use_container_width=True)
+        except requests.exceptions.RequestException as e:
+            st.error(f"Error fetching data for {fruit_chosen}: {e}")
+
