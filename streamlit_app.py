@@ -45,8 +45,12 @@ import requests
 # Fetch data from the API
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 
-# Convert the JSON response to a Pandas DataFrame
-fv_df = pd.json_normalize(fruityvice_response.json())
+# Check if the request was successful
+if fruityvice_response.status_code == 200:
+    # Convert the JSON response to a Pandas DataFrame
+    fv_df = pd.json_normalize(fruityvice_response.json())
 
-# Display the DataFrame in Streamlit
-st.dataframe(data=fv_df, use_container_width=True)
+    # Display the DataFrame in Streamlit
+    st.dataframe(data=fv_df, use_container_width=True)
+else:
+    st.error("Failed to fetch data from Fruityvice API")
