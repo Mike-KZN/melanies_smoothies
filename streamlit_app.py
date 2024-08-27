@@ -1,5 +1,7 @@
 # Import python packages
 import streamlit as st
+import pandas as pd  # Ensure Pandas is imported
+from snowflake.snowpark.session import Session
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -11,12 +13,18 @@ st.write("Choose the fruits you want in your custom Smoothie:")
 name_on_order = st.text_input("Name on Smoothie")
 st.write("The name on your Smoothie will be:", name_on_order)
 
-cnx = st.connection("snowflake")
+# Establish a connection to Snowflake
+cnx = st.experimental_connection("snowflake")  # Use st.experimental_connection
 session = cnx.session()
-# Convert the Snowpark Dataframe to a Pandas Dataframe so we can use the LOC function
+
+# Query data from Snowflake
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
+
+# Convert the Snowpark DataFrame to a Pandas DataFrame so we can use the LOC function
 pd_df = my_dataframe.to_pandas()
-# st.dataframe(pd_df)
-# st.stop()
+
+# st.dataframe(pd_df)  # Optional: display the DataFrame for debugging
+# st.stop()  # Optional: stop execution for debugging
 
 # Use a multiselect widget in Streamlit to allow users to select up to 5 ingredients
 ingredients_list = st.multiselect(
@@ -47,6 +55,3 @@ if ingredients_list:
 
         # Display the data fetched from the API in a Streamlit dataframe
         fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
-
-
-
