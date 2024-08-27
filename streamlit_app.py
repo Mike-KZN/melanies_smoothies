@@ -42,6 +42,11 @@ else:
         
 # New section to display FruityVice Nutrician Information
 import requests
+# Fetch data from the API
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-st.text(fruityvice_response.json())
-# fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=TRUE)
+
+# Convert the JSON response to a Pandas DataFrame
+fv_df = pd.json_normalize(fruityvice_response.json())
+
+# Display the DataFrame in Streamlit
+st.dataframe(data=fv_df, use_container_width=True))
