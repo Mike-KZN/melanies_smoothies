@@ -36,7 +36,24 @@ ingredients_list = st.multiselect(
     pd_df['FRUIT_NAME'],
     max_selections=5
 )
+if name_on_order and ingredients_list:
+    ingredients_string = ' '.join(ingredients_list)
+    
+    my_insert_stmt = f"""
+    insert into smoothies.public.orders(name_on_order, ingredients) 
+    values ('{name_on_order}', '{ingredients_string}')
+    """
 
+    time_to_insert = st.button('Submit Order', key='submit_order')
+    
+    if time_to_insert:
+        session.sql(my_insert_stmt).collect()
+        st.success('Your Smoothie is ordered!', icon="✅")
+else:
+    if not name_on_order:
+        st.warning('Please enter a name for your smoothie.')
+    if not ingredients_list:
+        st.warning('Please select at least one ingredient.')
 if ingredients_list:
     for fruit_chosen in ingredients_list:
         # Find the corresponding 'SEARCH_ON' value
