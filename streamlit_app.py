@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
-import panda as pd
+import requests
+import pandas as pd
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -42,7 +43,6 @@ else:
         st.warning('Please select at least one ingredient.')
         
 # New section to display Fruityvice nutrition information
-import requests
 
 if ingredients_list:
     ingredients_string = ''
