@@ -53,16 +53,10 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
-        # Use .loc to find the corresponding 'SEARCH_ON' value for the selected fruit
-        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
-        
-        # Display the search value using Streamlit's write function
-        st.write('The search value for ', fruit_chosen, ' is ', search_on, '.')
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
 
-        # Display a subheader for each selected fruit
         st.subheader(fruit_chosen + ' Nutrition Information')
-
-        # Make a request to the Fruityvice API to fetch nutrition information for the selected fruit
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_chosen)
 
         # Display the data fetched from the API in a Streamlit dataframe
