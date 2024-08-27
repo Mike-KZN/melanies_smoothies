@@ -15,7 +15,14 @@ conn_params = {
     "schema": "PUBLIC",
     "role": "SYSADMIN"
 }
+# Write directly to the app
+st.title(":cup_with_straw: Customize Your Smoothie App :cup_with_straw:")
 
+st.write("Choose the fruits you want in your custom Smoothie:")
+
+# Input for the name on the smoothie order
+name_on_order = st.text_input("Name on Smoothie")
+st.write("The name on your Smoothie will be:", name_on_order)
 # Establish a connection to Snowflake
 conn = snowflake.connector.connect(**conn_params)
 session = Session.builder.configs(conn_params).create()
