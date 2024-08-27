@@ -40,17 +40,14 @@ else:
     if not ingredients_list:
         st.warning('Please select at least one ingredient.')
         
-# New section to display FruityVice Nutrician Information
+# New section to display Fruityvice nutrition information
 import requests
-# Fetch data from the API
+
+# Fetch data from the Fruityvice API
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 
-# Check if the request was successful
-if fruityvice_response.status_code == 200:
-    # Convert the JSON response to a Pandas DataFrame
-    fv_df = pd.json_normalize(fruityvice_response.json())
+# Optional: Display the raw JSON response (currently commented out)
+# st.text(fruityvice_response.json())
 
-    # Display the DataFrame in Streamlit
-    st.dataframe(data=fv_df, use_container_width=True)
-else:
-    st.error("Failed to fetch data from Fruityvice API")
+# Display the DataFrame using Streamlit
+st.dataframe(data=fruityvice_response.json(), use_container_width=True)
