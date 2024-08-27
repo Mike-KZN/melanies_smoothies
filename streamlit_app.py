@@ -49,4 +49,4 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon"
 fv_df = pd.json_normalize(fruityvice_response.json())
 
 # Display the DataFrame in Streamlit
-st.dataframe(data=fv_df, use_container_width=True))
+st.dataframe(data=fv_df, use_container_width=True)
