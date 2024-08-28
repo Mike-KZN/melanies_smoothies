@@ -24,7 +24,6 @@ pd_df = my_dataframe.to_pandas()
 # Use the Pandas DataFrame for the multiselect widget
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:',
-    # pd_df['FRUIT_NAME'].tolist(),  # Corrected to use Pandas DataFrame
     my_dataframe,
     max_selections=5
 )
